@@ -1,11 +1,26 @@
-def main():
-    with open("/home/jojo/workspace/github.com/jdemum/bookbot/books/frankenstein.txt") as f:
-        file_contents = f.read()
-    word_count = wordcount(file_contents)
-    print(f"{word_count} words found in the document")
+from stats import get_num_words
+from stats import char_count
+from stats import sort_char_count  # Import your new function
 
-def wordcount(file_contents):
-    words = file_contents.split()
-    num_words = len(words)
-    return num_words
+book_path = "books/frankenstein.txt"
+
+def main():
+    with open(book_path) as f:
+        file_contents = f.read()
+    word_count = get_num_words(file_contents)
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {book_path}...")
+    print("----------- Word Count ----------")
+    print(f"Found {word_count} total words")
+    
+    char_counts = char_count(file_contents)
+    sorted_counts = sort_char_count(char_counts)  # Use your new function
+    
+    print("--------- Character Count -------")
+    for char_dict in sorted_counts:
+        if char_dict["char"].isalpha():
+            print(f"{char_dict['char']}: {char_dict['count']}")
+    
+    print("============= END ===============")
+
 main()
